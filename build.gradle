@@ -1,0 +1,59 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.22'
+	id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.22'
+	id 'org.jetbrains.kotlin.plugin.lombok' version '1.9.22'
+	id 'io.freefair.lombok' version '8.1.0'
+}
+
+
+group = 'com.smartpaments.superpos'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '21'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'io.github.oshai:kotlin-logging-jvm:5.1.0'
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	runtimeOnly 'org.postgresql:postgresql'
+//	implementation 'io.hypersistence:hypersistence-utils-hibernate-62:3.7.2'
+
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+}
+
+tasks.withType(KotlinCompile).configureEach {
+	kotlinOptions {
+		freeCompilerArgs += '-Xjsr305=strict'
+		jvmTarget = '21'
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
