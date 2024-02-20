@@ -1,5 +1,6 @@
 package com.smartpayments.superpos.aggregationservice.resources
 
+import com.smartpayments.superpos.aggregationservice.business.StorageService
 import com.smartpayments.superpos.aggregationservice.business.TaskService
 import com.smartpayments.superpos.aggregationservice.resources.dto.AggregationServiceTaskDTO
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/task")
 class TaskController(
-    private val taskService: TaskService) {
-    private val logger = KotlinLogging.logger {}
+    private val taskService: TaskService,
+    private val storageService: StorageService) {
 
     @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
@@ -21,8 +22,8 @@ class TaskController(
 
     @GetMapping("/{id}/result", produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
-    fun getTaskResult(@PathVariable id: Long): Map<String, Any>? {
+    fun getTaskResult(@PathVariable id: Long): ByteArray? {
         val task = taskService.get(id)
-        return task.customProps
+        return storageService.getObjects(task);
     }
 }

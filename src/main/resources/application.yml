@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jooq:
+    sql-dialect: ${DB_SQL_DIALECT}
+  jpa:
+    properties:
+      jakarta:
+        persistence:
+          query:
+            timeout: ${DB_QUERY_TIMEOUT}
+    show-sql: ${DB_SHOW_SQL}
+
+s3:
+  bucket: ${S3_BUCKET}
+  folder: ${S3_FOLDER}
+  key: ${S3_KEY}
+  secret: ${S3_SECRET}
+  url: ${S3_URL}
+  contenttype: ${S3_CONTENT_TYPE}
