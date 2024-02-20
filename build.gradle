@@ -38,11 +38,12 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'org.postgresql:postgresql'
-//	implementation 'io.hypersistence:hypersistence-utils-hibernate-62:3.7.2'
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+	implementation 'io.minio:minio:8.5.8'
 
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 }

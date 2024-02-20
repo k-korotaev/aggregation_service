@@ -18,8 +18,8 @@ class BillingTransactionService (
     private val transactionRepository: TransactionRepository,
     private val accountRepository: AccountRepository,
     private val gateRepository: GateRepository,
-    private val taskService: TaskService
-) {
+    private val taskService: TaskService,
+    private val storageService: StorageService) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -44,17 +44,18 @@ class BillingTransactionService (
                 )
             })
 
-            logger.info { "Task ${task.id}. Result uploaded to storage" }
-
             /*
                 todo: to store in S3 and return result to objectSize
             */
 
+            val uploadResult = storageService.uploadObjects(task, result)
+
+            logger.info { "Task ${task.id}. Result uploaded to storage." }
+
             taskService.approve(
                 task,
-                hashMapOf(Pair("objectSize", transactions.count().toString()))
+                hashMapOf(Pair("uploadResult", uploadResult))
             )
-
         }
         catch (ex: Exception){
             logger.error { "Failed to process task ${task.id}: ${ex.message}"}
