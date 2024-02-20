@@ -4,7 +4,6 @@ import com.smartpayments.superpos.aggregationservice.integration.config.S3Bucket
 import com.smartpayments.superpos.aggregationservice.integration.exception.S3IntegrationException
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.minio.*
-import io.minio.messages.Bucket
 import org.apache.commons.compress.utils.IOUtils
 import org.springframework.stereotype.Component
 import java.io.*
@@ -20,7 +19,7 @@ class MinioAdapter(
     override fun uploadToBucket(name: String, content: ByteArray): S3Adapter.S3Response {
         try {
             val stream = ByteArrayInputStream(content)
-            val response = client.putObject(
+            client.putObject(
                 PutObjectArgs.builder()
                     .bucket(s3params.bucket)
                     .`object`(name)
@@ -32,9 +31,9 @@ class MinioAdapter(
                 StatObjectArgs.builder()
                     .`object`(name)
                     .bucket(s3params.bucket)
-                    .build());
+                    .build())
             logger.info { "Object $name successfully uploaded at ${stat.lastModified()}." }
-            return S3Adapter.S3Response(stat.bucket(), stat.`object`(), stat.size());
+            return S3Adapter.S3Response(stat.bucket(), stat.`object`(), stat.size())
         } catch (ex: Exception) {
             logger.error { "${ex.message}" }
             throw S3IntegrationException("An unexpected exception occurred while loading a document.",ex)
@@ -55,6 +54,5 @@ class MinioAdapter(
             logger.error { "${ex.message}" }
             throw S3IntegrationException("An unexpected exception occurred while downloading a document",ex)
         }
-        return null
     }
 }

@@ -13,7 +13,7 @@ class MinioConfiguration(val s3params: S3BucketProperties) {
             val client: MinioClient = MinioClient.builder()
                 .endpoint(s3params.url)
                 .credentials(s3params.key, s3params.secret)
-                .build();
+                .build()
             return client
         } catch (e: Exception) {
             throw RuntimeException(e.message)

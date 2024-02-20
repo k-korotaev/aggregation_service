@@ -3,7 +3,6 @@ package com.smartpayments.superpos.aggregationservice.resources
 import com.smartpayments.superpos.aggregationservice.business.StorageService
 import com.smartpayments.superpos.aggregationservice.business.TaskService
 import com.smartpayments.superpos.aggregationservice.resources.dto.AggregationServiceTaskDTO
-import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
@@ -24,6 +23,6 @@ class TaskController(
     @ResponseBody
     fun getTaskResult(@PathVariable id: Long): ByteArray? {
         val task = taskService.get(id)
-        return storageService.getObjects(task);
+        return storageService.getObjects(task)
     }
 }
