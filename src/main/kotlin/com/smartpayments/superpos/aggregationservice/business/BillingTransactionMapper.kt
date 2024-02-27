@@ -3,7 +3,9 @@ package com.smartpayments.superpos.aggregationservice.business
 import com.smartpayments.superpos.aggregationservice.repository.jsonb.entity.AccountEntity
 import com.smartpayments.superpos.aggregationservice.repository.jsonb.entity.TransactionEntity
 import com.smartpayments.superpos.aggregationservice.resources.dto.BillingTransactionDTO
+import org.springframework.stereotype.Component
 
+@Component
 class BillingTransactionMapper {
     companion object Mapper {
         fun toDTO(transactionEntity: TransactionEntity, billingAccount: AccountEntity?): BillingTransactionDTO {

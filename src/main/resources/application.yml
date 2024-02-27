@@ -1,11 +1,14 @@
 spring:
   datasource:
+    hikari:
+      maximum-pool-size: ${DB_HIKARI_POOL_SIZE}
     driver-class-name: ${DB_DRIVER_CLASS_NAME}
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-  jooq:
-    sql-dialect: ${DB_SQL_DIALECT}
+  sql:
+    init:
+      platform: ${DB_SQL_DIALECT}
   jpa:
     properties:
       jakarta:
@@ -13,7 +16,16 @@ spring:
           query:
             timeout: ${DB_QUERY_TIMEOUT}
     show-sql: ${DB_SHOW_SQL}
-
+  task:
+    scheduling:
+      pool:
+        size: ${TASK_SHEDULER_POOL_SIZE:1}
+task:
+  executor:
+    pool:
+      core-size: ${TASK_EXECUTOR_POOL_SIZE:8}
+      max-size: ${TASK_EXECUTOR_POOL_MAX:16}
+      keep-alive: ${TASK_EXECUTOR_ALIVE:120}
 s3:
   bucket: ${S3_BUCKET}
   folder: ${S3_FOLDER}
